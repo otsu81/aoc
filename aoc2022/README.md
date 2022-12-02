@@ -1,3 +1,3 @@
-# Typescript boilerplate
+# Advent of Code 2022
 
-This is my personal Typescript boilerplate. I mostly write for Node.JS and AWS Lambda.
+https://adventofcode.com/2022
