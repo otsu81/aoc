@@ -9,7 +9,7 @@ function puzzle2(rucksacks: string[]) {
     const intersection = new Set([...r1]
       .filter(char => r2.includes(char))
       .filter(char => r3.includes(char)))
-    
+
     for (let char of intersection) sum += scoreObject[char]
   }
 
@@ -37,5 +37,5 @@ function puzzle1(rucksacks: string[]) {
 
   puzzle1(rucksacks)
   puzzle2(rucksacks)
-  
+
 })()
