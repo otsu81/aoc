@@ -31,21 +31,10 @@ function puzzle2(pairs: string[]) {
   let sum = 0
   for (let pair of pairs) {
     const spl = pairSplitter(pair)
-
-    const p1: number[] = []
-    const p2: number[] = []
-    for (let i = spl[0][0]; i <= spl[0][1]; i++) {
-      p1.push(i)
-    }
-    for (let j = spl[1][0]; j <= spl[1][1]; j++) {
-      p2.push(j)
-    }
-
-    for (let elem of p1) {
-      if (p2.includes(elem)) {
-        sum++
-        break
-      }
+    if (spl[0][0] >= spl[1][0] && spl[0][0] <= spl[1][1]) {
+      sum++
+    } else if (spl[0][1] >= spl[1][0] && spl[0][0] <= spl[1][1]) {
+      sum++
     }
   }
   console.log('puzzle2:', sum)
