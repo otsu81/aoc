@@ -30,10 +30,11 @@ function extractInstructions(instructionsInput: string): string[][] {
   return instructions
 }
 
-function mover(instructions: string[], stacksMap: Map<string, string[]>) {
-  // instructions[0] = total blocks to move
-  // instructions[1] = from stack
-  // instructions[2] = to stack
+// instructions[0] = total blocks to move
+// instructions[1] = from stack
+// instructions[2] = to stack
+
+function mover9000(instructions: string[], stacksMap: Map<string, string[]>) {
   for (let i = 0; i < parseInt(instructions[0]); i++) {
     const fromStack = stacksMap.get(instructions[1])
     const toStack = stacksMap.get(instructions[2])
@@ -41,22 +42,36 @@ function mover(instructions: string[], stacksMap: Map<string, string[]>) {
     stacksMap.set(instructions[2], toStack)
     stacksMap.set(instructions[1], fromStack)
   }
-
   return stacksMap
 }
 
-function puzzle1(stacks: string, instructions: string) {
+function mover9001(instructions: string[], stacksMap: Map<string, string[]>) {
+  const slicedPart = stacksMap.get(instructions[1]).slice(0, parseInt(instructions[0]))
+  const slicedStack = stacksMap.get(instructions[1]).slice(parseInt(instructions[0]))
+  const toStack = stacksMap.get(instructions[2])
+  const stackedStack = slicedPart.concat(toStack)
+
+  stacksMap.set(instructions[1], slicedStack)
+  stacksMap.set(instructions[2], stackedStack)
+  return stacksMap
+}
+
+function puzzle(
+    stacks: string,
+    instructions: string,
+    moverFunction: (a: string[], b: Map<string, string[]>) => Map<string, string[]>
+  ) {
   let stacksMap = buildStacks(stacks)
   const instr = extractInstructions(instructions)
   for (let i of instr) {
-    stacksMap = mover(i, stacksMap)
+    stacksMap = moverFunction(i, stacksMap)
   }
 
   let finalPops: string = ''
   for (let val of stacksMap.values()) {
     finalPops += val.shift()
   }
-  console.log(finalPops)
+  return finalPops
 }
 
 (async () => {
@@ -66,6 +81,9 @@ function puzzle1(stacks: string, instructions: string) {
 
   const [ stacks, instructions ] = file.split('\n\n');
 
-  puzzle1(stacks, instructions)
+  const puzzle1 = puzzle(stacks, instructions, mover9000)
+  const puzzle2 = puzzle(stacks, instructions, mover9001)
+
+  console.log({ puzzle1, puzzle2 })
 
 })()
