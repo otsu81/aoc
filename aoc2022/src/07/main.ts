@@ -86,7 +86,7 @@ function puzzle1() {
   for (let dir of dirMap.values()) {
     if (dir.dirSize < 100000) sum += dir.dirSize
   }
-  console.log({ sum })
+  return sum
 }
 
 function puzzle2() {
@@ -100,11 +100,7 @@ function puzzle2() {
     if (dir.dirSize >= needed )potentials.push(dir.dirSize)
   }
   potentials.sort((a, b) => b - a)
-
-  console.log({ unused, needed })
-
-  console.log(potentials)
-  console.log(potentials.pop())
+  return potentials.pop()
 }
 
 (async () => {
@@ -114,8 +110,7 @@ function puzzle2() {
 
   constructDirMap(file)
 
-  // puzzle1()
-  puzzle2()
+  console.log('puzzle1:', puzzle1())
+  console.log('puzzle2:', puzzle2())
 
-  // console.log(dirMap)
 })()
