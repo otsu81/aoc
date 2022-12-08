@@ -2,9 +2,7 @@ import * as fs from 'fs'
 
 interface Directory {
   dirName: string,
-  path?: string[],
-  dirs?: Directory[],
-  dirSize?: number
+  dirSize: number
 }
 
 let pwd: string[] = []
