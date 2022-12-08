@@ -16,12 +16,12 @@ function getAbsPath(path = pwd): string {
 
 function listDir() {
   const absPath = getAbsPath()
- if (!dirMap.has(absPath)) {
-  const dirName = pwd[pwd.length-1] || '/';
-  dirMap.set(absPath, {
-    dirName,
-    dirSize: 0
-  })
+  if (!dirMap.has(absPath)) {
+    const dirName = pwd[pwd.length-1] || '/';
+    dirMap.set(absPath, {
+      dirName,
+      dirSize: 0
+    })
  }
 }
 
