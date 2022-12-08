@@ -38,7 +38,7 @@ function executeCommand(cmd: string) {
 }
 
 function addLineToPwd(output: string) {
-  const [ prop, name ] = output.split(' ')
+  const [ prop, __ ] = output.split(' ')
   if (prop !== 'dir') {
     const size = parseInt(prop);
     dirMap.get(getAbsPath()).dirSize += size
