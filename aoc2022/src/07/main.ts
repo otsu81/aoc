@@ -1,14 +1,8 @@
 import * as fs from 'fs'
 
-interface File {
-  fileName: string,
-  size: number
-}
-
 interface Directory {
   dirName: string,
   path?: string[],
-  files?: File[],
   dirs?: Directory[],
   dirSize?: number
 }
@@ -26,7 +20,6 @@ function listDir() {
   const absPath = getAbsPath()
  if (!dirMap.has(absPath)) {
   const dirName = pwd[pwd.length-1] || '/';
-  const path = dirName === '/' ? [] : [...pwd]
   dirMap.set(absPath, {
     dirName,
     dirSize: 0
@@ -42,17 +35,8 @@ function changeDir(path: string) {
 
 function executeCommand(cmd: string) {
   const [ __, word, path ] = cmd.split(' ')
-  switch (word) {
-    case 'cd':
-      changeDir(path)
-      break
-    case 'ls':
-      listDir()
-      break
-    default:
-      console.error(`unknown cmd ${cmd}`)
-      break
-  }
+  if (word === 'cd') changeDir(path)
+  else listDir()
 }
 
 function addLineToPwd(output: string) {
@@ -97,7 +81,7 @@ function puzzle2() {
 
   const potentials: number[] = []
   for (let dir of dirMap.values()) {
-    if (dir.dirSize >= needed )potentials.push(dir.dirSize)
+    if (dir.dirSize >= needed) potentials.push(dir.dirSize)
   }
   potentials.sort((a, b) => b - a)
   return potentials.pop()
