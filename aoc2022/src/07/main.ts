@@ -5,24 +5,23 @@ interface Directory {
   dirSize: number
 }
 
-let pwd: string[] = []
+const pwd: string[] = []
 const dirMap = new Map<string, Directory>()
 
 function getAbsPath(path = pwd): string {
-  let absPath = '/'
-  path.forEach(dir => absPath = `${absPath}${dir}/`)
+  const absPath = '/' + path.join('/');
   return absPath
 }
 
 function listDir() {
   const absPath = getAbsPath()
   if (!dirMap.has(absPath)) {
-    const dirName = pwd[pwd.length-1] || '/';
+    const dirName = pwd[pwd.length - 1] || '/';
     dirMap.set(absPath, {
       dirName,
       dirSize: 0
     })
- }
+  }
 }
 
 function changeDir(path: string) {
@@ -37,15 +36,6 @@ function executeCommand(cmd: string) {
   else listDir()
 }
 
-function addLineToPwd(output: string) {
-  const [ prop, __ ] = output.split(' ')
-  if (prop !== 'dir') {
-    const size = parseInt(prop);
-    dirMap.get(getAbsPath()).dirSize += size
-    updateParentDirSize(pwd, size)
-  }
-}
-
 function updateParentDirSize(childPath: string[], fileSize: number) {
   if (childPath.length > 0) {
     const parent = childPath.slice(0, -1)
@@ -53,9 +43,17 @@ function updateParentDirSize(childPath: string[], fileSize: number) {
     updateParentDirSize(parent, fileSize)
   }
 }
+function addLineToPwd(output: string) {
+  const [ prop ] = output.split(' ')
+  if (prop !== 'dir') {
+    const size = parseInt(prop, 10);
+    dirMap.get(getAbsPath()).dirSize += size
+    updateParentDirSize(pwd, size)
+  }
+}
 
 function constructDirMap(readOut: string[]) {
-  readOut.forEach(line => {
+  readOut.forEach((line) => {
     if (line.startsWith('$')) executeCommand(line)
     else {
       addLineToPwd(line)
@@ -65,7 +63,7 @@ function constructDirMap(readOut: string[]) {
 
 function puzzle1() {
   let sum = 0;
-  for (let dir of dirMap.values()) {
+  for (const dir of dirMap.values()) {
     if (dir.dirSize < 100000) sum += dir.dirSize
   }
   return sum
@@ -77,12 +75,12 @@ function puzzle2() {
   const unused = totalFilespace - dirMap.get('/').dirSize
   const needed = desired - unused
 
-  const potentials: number[] = []
-  for (let dir of dirMap.values()) {
-    if (dir.dirSize >= needed) potentials.push(dir.dirSize)
+  let smallestSuitableNum = Number.MAX_SAFE_INTEGER
+  for (const dir of dirMap.values()) {
+    if (dir.dirSize > needed && dir.dirSize < smallestSuitableNum) smallestSuitableNum = dir.dirSize
   }
-  potentials.sort((a, b) => b - a)
-  return potentials.pop()
+
+  return smallestSuitableNum
 }
 
 (async () => {
@@ -94,5 +92,4 @@ function puzzle2() {
 
   console.log('puzzle1:', puzzle1())
   console.log('puzzle2:', puzzle2())
-
 })()
