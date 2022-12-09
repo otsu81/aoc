@@ -16,11 +16,12 @@
   },
   "rules": {
     "@typescript-eslint/no-var-requires": "off",
-    "no-console": "off",
     "@typescript-eslint/semi": "off",
     "@typescript-eslint/comma-dangle": "off",
+    "no-console": "off",
     "array-bracket-spacing": "off",
     "no-plusplus": "off",
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    "prefer-template": "off"
   }
 }
