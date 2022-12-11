@@ -42,7 +42,7 @@ function visibleTree(nums: number[], pos: number): boolean {
   return visWest || visEast
 }
 
-function visibilityScore(nums: number[], pos: number) {
+function visibilityScore(nums: number[], pos: number): number {
   let westScore = 0
   for (let i = pos - 1; i >= 0; i--) {
     westScore++
@@ -60,7 +60,7 @@ function visibilityScore(nums: number[], pos: number) {
   return westScore * eastScore
 }
 
-function puzzle1(matrix: MatrixStructure) {
+function puzzle1(matrix: MatrixStructure): number {
   let sum = 0
   const edges = matrix.rows.length * 2 + matrix.rows[0].length * 2 - 4
   sum += edges
@@ -74,7 +74,7 @@ function puzzle1(matrix: MatrixStructure) {
   return sum
 }
 
-function puzzle2(matrix: MatrixStructure) {
+function puzzle2(matrix: MatrixStructure): number {
   let highest = Number.MIN_SAFE_INTEGER
   for (let i = 1; i < matrix.rows.length - 1; i++) {
     for (let j = 1; j < matrix.rows.length - 1; j++) {
