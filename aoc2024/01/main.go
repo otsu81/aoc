@@ -46,19 +46,15 @@ func problem1(a1, a2 []int) {
 }
 
 func problem2(a1, a2 []int) {
-	m1, m2 := make(map[int]int), make(map[int]int)
-	for _, i := range a1 {
-		m1[i]++
-	}
+	m := make(map[int]int)
 	for _, i := range a2 {
-		m2[i]++
+		m[i]++
 	}
 
 	sum := 0
 	for _, v := range a1 {
-		if m2[v] > 0 {
-			product := v * m2[v]
-			sum += product
+		if m[v] > 0 {
+			sum += v * m[v]
 		}
 	}
 	fmt.Println("problem 2:", sum)
